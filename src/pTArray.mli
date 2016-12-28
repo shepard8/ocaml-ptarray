@@ -111,6 +111,24 @@ val fold_left2 : ('c -> 'a -> 'b -> 'c) -> 'c -> 'a t -> 'b t -> 'c
 
 (* {2 Scanning} *)
 
+val for_all : ('a -> bool) -> 'a t -> bool
+(** [for_all p pta] O(length pta)
+ * Checks that every value of [pta] satisfies the predicate [p]. *)
+
+val for_alli : (int -> 'a -> bool) -> 'a t -> bool
+(** [for_alli p pta] O(length pta)
+ * Checks that every value of [pta] satisfies the predicate [p] given its
+ * position. *)
+
+val exists : ('a -> bool) -> 'a t -> bool
+(** [exists p pta] O(length pta)
+ * Checks that at least one value in [pta] satisfies the predicate [p]. *)
+
+val existsi : (int -> 'a -> bool) -> 'a t -> bool
+(** [existsi p pta] O(length pta)
+ * Checks that at least one value in [pta] satisfies the predicate [p] given
+ * its position. *)
+
 val mem : 'a t -> 'a -> bool
 (** [mem pta v] O(length pta)
  * Checks whether [v] is a member of [pta]. *)
@@ -124,9 +142,6 @@ val memq : 'a t -> 'a -> bool
 val fold_right
 val foldi_right
 val fold2_right
-
-val for_all
-val exists
 
 val find : 'a t -> ('a -> bool) -> 'a
 val findi : 'a t -> (int -> 'a -> bool) -> int * 'a
