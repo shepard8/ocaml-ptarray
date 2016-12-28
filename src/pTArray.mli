@@ -128,9 +128,6 @@ val fold2_right
 val for_all
 val exists
 
-val mem : 'a t -> 'a -> bool
-val memq : 'a t -> 'a -> bool
-
 val find : 'a t -> ('a -> bool) -> 'a
 val findi : 'a t -> (int -> 'a -> bool) -> int * 'a
 
