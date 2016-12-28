@@ -180,6 +180,9 @@ let rec fold_left2 f acc a b =
   let acc = List.fold_left2 f acc a.roots b.roots in
   List.fold_left2 (fold_left2 f) acc a.subtrees b.subtrees
 
+let rec mem a v =
+  List.mem v a.roots || List.exists (fun st -> mem st v) a.subtrees
+
 
 
 

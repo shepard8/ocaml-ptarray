@@ -226,6 +226,17 @@ let tests = [
     );
   ];
 
+  "mem" >::: [
+    "Present" >:: (fun _ ->
+      let a = init 25 (fun i -> 2 * i) in
+      assert_equal true (mem a 42)
+    );
+    "Absent" >:: (fun _ ->
+      let a = init 25 (fun i -> 2 * i) in
+      assert_equal false (mem a 50)
+    );
+  ];
+
 
 
 
