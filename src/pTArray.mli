@@ -107,7 +107,7 @@ val iter2 : ('a -> 'b -> unit) -> 'a t -> 'b t -> unit
 
 val map2 : ('a -> 'b -> 'c) -> 'a t -> 'b t -> 'c t
 
-val fold2_left : ('c -> 'a -> 'b -> 'c) -> 'c -> 'a t -> 'b t -> 'c
+val fold_left2 : ('c -> 'a -> 'b -> 'c) -> 'c -> 'a t -> 'b t -> 'c
 
 (*
 
