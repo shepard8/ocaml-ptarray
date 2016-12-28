@@ -186,6 +186,29 @@ let rec mem a v =
 let rec memq a v =
   List.memq v a.roots || List.exists (fun st -> memq st v) a.subtrees
 
+let rec for_all p a =
+  List.for_all p a.roots && List.for_all (for_all p) a.subtrees
+
+let rec list_for_alli p start = function
+  | [] -> true
+  | h :: t -> p start h && list_for_alli p (start + 1) t
+
+let rec for_alli p a =
+  list_for_alli p a.decal a.roots && List.for_all (for_alli p) a.subtrees
+
+let rec exists p a =
+  List.exists p a.roots || List.exists (exists p) a.subtrees
+
+let rec list_existsi p start = function
+  | [] -> false
+  | h :: t -> p start h || list_existsi p (start + 1) t
+
+let rec existsi p a =
+  list_existsi p a.decal a.roots || List.exists (existsi p) a.subtrees
+
+
+
+
 
 
 
