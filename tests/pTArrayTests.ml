@@ -226,6 +226,57 @@ let tests = [
     );
   ];
 
+  "for_all" >::: [
+    "True" >:: (fun _ ->
+      let a = of_list l10 in
+      assert_equal true (for_all (fun x -> x < 10) a)
+    );
+    "False" >:: (fun _ ->
+      let a = of_list l10 in
+      assert_equal false (for_all (fun x -> x < 9) a)
+    );
+  ];
+
+  "for_alli" >::: [
+    "True" >:: (fun _ ->
+      let a = of_list l10 in
+      assert_equal true (for_alli (fun i x -> i = 9 || x < 10) a)
+    );
+    "False" >:: (fun _ ->
+      let a = of_list l10 in
+      assert_equal false (for_alli (fun i x -> i < 9 && x < 10) a)
+    );
+  ];
+
+  "exists" >::: [
+    "True" >:: (fun _ ->
+      let a = of_list l10 in
+      assert_equal true (exists (( = ) 5) a)
+    );
+    "False" >:: (fun _ ->
+      let a = of_list l10 in
+      assert_equal false (exists (( = ) 42) a)
+    );
+  ];
+
+  "existsi" >::: [
+    "True" >:: (fun _ ->
+      let a = of_list l10 in
+      assert_equal true (existsi (fun i x -> i >= 5 && x < 6) a)
+    );
+    "False" >:: (fun _ ->
+      let a = of_list l10 in
+      assert_equal false (existsi (fun i x -> i = 5 && x <> 5) a)
+    );
+    "Lazyness" >:: (fun _ ->
+      let a = of_list l10 in
+      let count = ref 0 in
+      let v = existsi (fun i x -> count := !count + 1; i >= 0) a in
+      assert_equal true v;
+      assert_equal 1 (!count)
+    );
+  ];
+
   "mem" >::: [
     "Present" >:: (fun _ ->
       let a = init 25 (fun i -> 2 * i) in
@@ -249,9 +300,7 @@ let tests = [
       let a = of_list [ v ] in
       assert_equal false (memq a w)
     );
-  ]
-
-
+  ];
 
 
 ]
