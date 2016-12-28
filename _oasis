@@ -1,0 +1,42 @@
+Name: PTArray
+Version: 1.0
+Synopsis: A library handling persistent arrays using trees.
+Authors: Fabian Pijcke <fabian.pijcke@gmail.com>
+License: LGPL with OCaml linking exception
+
+Description: When one wants arrays with functional updates (that is, updating
+  the array does not alter previously existing references of this array), just
+  duplicating the array is obviously a bad idea as the whole array needs to be
+  stored in memory while only one value changed. This implementation of
+  persistent arrays lowers the memory footprint at the price of random access
+  in logarithmic time instead of constant time. The memory need when
+  functionnaly updating the array is however logarithmic instead of linear.
+
+OASISFormat: 0.4
+BuildTools: ocamlbuild
+Plugins: META (0.4)
+
+Library "ptarray"
+  Path: src
+  Modules: PTArray
+
+Document "ptarray_api"
+  Type: ocamlbuild (0.4)
+  BuildTools: ocamldoc
+  Title: AYI reference for ptarray
+  XOCamlbuildpath: .
+  XOcamlbuildLibraries: ptarray
+
+Executable "ptarray_tests"
+  Path: tests
+  MainIs: tests.ml
+  Build$: flag(tests)
+  CompiledObject: best
+  Install: false
+  BuildDepends: ptarray, oUnit
+
+Test "all"
+  Run$: flag(tests)
+  TestTools: ptarray_tests
+  Command: $ptarray_tests
+
