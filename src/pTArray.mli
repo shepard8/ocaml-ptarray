@@ -91,12 +91,12 @@ val mapi : (int -> 'a -> 'b) -> 'a t -> 'b t
  * Produces a new persistent tree-array in which each element [x] at position
  * [i] is replaced with [f i x]. *)
 
-val fold_left : ('b -> 'a -> 'b) -> 'b -> 'a t -> 'b t
+val fold_left : ('b -> 'a -> 'b) -> 'b -> 'a t -> 'b
 (** [fold_left f start pta] O(length pta * complexity of f)
  * Folds the persistent tree-array v0 v1 ... vn in the following fashion:
  *   f (... (f (f start v0) v1) ...) vn. *)
 
-val foldi_left : ('b -> int -> 'a -> 'b) -> 'b -> 'a t -> 'b t
+val foldi_left : ('b -> int -> 'a -> 'b) -> 'b -> 'a t -> 'b
 (** [foldi_left f start pta]
  * Same as [fold_left] but the index is also given as a parameter to the
  * folding function. *)
