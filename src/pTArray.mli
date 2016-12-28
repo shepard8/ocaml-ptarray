@@ -112,6 +112,12 @@ val fold_left2 : ('c -> 'a -> 'b -> 'c) -> 'c -> 'a t -> 'b t -> 'c
 (* {2 Scanning} *)
 
 val mem : 'a t -> 'a -> bool
+(** [mem pta v] O(length pta)
+ * Checks whether [v] is a member of [pta]. *)
+
+val memq : 'a t -> 'a -> bool
+(** [memq pta v] O(length pta)
+ * Checks whether [v] is a member of [pta] using physical identity. *)
 
 (*
 

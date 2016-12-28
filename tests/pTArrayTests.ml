@@ -237,6 +237,20 @@ let tests = [
     );
   ];
 
+  "memq" >::: [
+    "Present" >:: (fun _ ->
+      let v = [| 1; 2 |] in
+      let a = of_list [ v ] in
+      assert_equal true (memq a v)
+    );
+    "Absent" >:: (fun _ ->
+      let v = [| 1; 2 |] in
+      let w = [| 1; 2 |] in
+      let a = of_list [ v ] in
+      assert_equal false (memq a w)
+    );
+  ]
+
 
 
 

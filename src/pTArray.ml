@@ -183,6 +183,9 @@ let rec fold_left2 f acc a b =
 let rec mem a v =
   List.mem v a.roots || List.exists (fun st -> mem st v) a.subtrees
 
+let rec memq a v =
+  List.memq v a.roots || List.exists (fun st -> memq st v) a.subtrees
+
 
 
 
