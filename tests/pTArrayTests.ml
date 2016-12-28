@@ -159,6 +159,33 @@ let tests = [
     );
   ];
 
+  "fold_left" >::: [
+    "Sum" >:: (fun _ ->
+      let a = of_list l10 in
+      let v = fold_left ( + ) 0 a in
+      assert_equal 45 v
+    );
+    "Empty" >:: (fun _ ->
+      let a = of_list l0 in
+      let v = fold_left ( * ) 42 a in
+      assert_equal 42 v
+    );
+  ];
+
+  "foldi_left" >::: [
+    "Sum" >:: (fun _ ->
+      let a = of_list l10 in
+      let v = fold_left (fun acc i v -> acc + i + v) 0 a in
+      assert_equal 90 v
+    );
+    "Empty" >:: (fun _ ->
+      let a = of_list l0 in
+      let v = fold_left (fun acc i v -> acc * i * v) 42 a in
+      assert_equal 42 v
+    );
+  ];
+
+
 
 
 
@@ -181,6 +208,21 @@ let tests = [
       let b = init 10 (fun i -> if i < 5 then 2 else 0) in
       let c = map2 ( * ) a b in
       assert_equal c (of_list [0; 2; 4; 6; 8; 0; 0; 0; 0; 0])
+    );
+  ];
+
+  "fold_left2" >::: [
+    "Sum of products" >:: (fun _ ->
+      let a = of_list l10 in
+      let b = init 10 (fun i -> if i < 5 then 1 else 0) in
+      let v = fold_left2 (fun acc a b -> acc + a * b) 0 a b in
+      assert_equal 10 v
+    );
+    "Non matching lengths" >:: (fun _ ->
+      let a = of_list l10 in
+      let b = init 11 (fun i -> i) in
+      let v _ = fold_left2 (fun acc a b -> acc + a * b) 0 a b in
+      assert_raises (Invalid_argument "List.fold_left2") v
     );
   ];
 
