@@ -164,6 +164,22 @@ let rec print ?(prefix="") f pt =
   print_newline ();
   List.iter (print ~prefix:(prefix^"  ") f) pt.subtrees
 
+let rec fold_left f acc a =
+  let acc = List.fold_left f acc a.roots in
+  List.fold_left (fold_left f) acc a.subtrees
+
+let rec list_foldi_left f acc i = function
+  | [] -> acc
+  | h :: t -> list_foldi_left f (f acc i h) (i + 1) t
+
+let rec foldi_left f acc a =
+  let acc = list_foldi_left f acc a.decal a.roots in
+  List.fold_left (foldi_left f) acc a.subtrees
+
+let rec fold_left2 f acc a b =
+  let acc = List.fold_left2 f acc a.roots b.roots in
+  List.fold_left2 (fold_left2 f) acc a.subtrees b.subtrees
+
 
 
 

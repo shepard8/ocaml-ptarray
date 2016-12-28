@@ -175,12 +175,12 @@ let tests = [
   "foldi_left" >::: [
     "Sum" >:: (fun _ ->
       let a = of_list l10 in
-      let v = fold_left (fun acc i v -> acc + i + v) 0 a in
+      let v = foldi_left (fun acc i v -> acc + i + v) 0 a in
       assert_equal 90 v
     );
     "Empty" >:: (fun _ ->
       let a = of_list l0 in
-      let v = fold_left (fun acc i v -> acc * i * v) 42 a in
+      let v = foldi_left (fun acc i v -> acc * i * v) 42 a in
       assert_equal 42 v
     );
   ];
