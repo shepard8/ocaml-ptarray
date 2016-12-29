@@ -101,6 +101,16 @@ val foldi_left : ('b -> int -> 'a -> 'b) -> 'b -> 'a t -> 'b
  * Same as [fold_left] but the index is also given as a parameter to the
  * folding function. *)
 
+val fold_right : ('a -> 'b -> 'b) -> 'a t -> 'b -> 'b
+(** [fold_right f pta start] O(length pta * complexity of f)
+ * Folds the persistent tree-array v0 v1 ... vn in the following fashion:
+ *   f v0 (f v1 (... (f vn start) ...)). *)
+
+val foldi_right : (int -> 'a -> 'b -> 'b) -> 'a t -> 'b -> 'b
+(** [foldi_right f pta start]
+ * Same as [fold_right] but the index is also given as a parameter to the
+ * folding function. *)
+
 (* {2 Iterators on two persistent tree-arrays} *)
 
 val iter2 : ('a -> 'b -> unit) -> 'a t -> 'b t -> unit
