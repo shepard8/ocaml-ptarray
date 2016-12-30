@@ -3,8 +3,8 @@ type 'a t = {
   roots : 'a list;
   subtrees : 'a t list;
 }
-(* - There are [order - 1] root elements
- * - There are [order] subtrees *)
+
+exception Lengths_differ
 
 let fast_exp x e =
   let rec aux acc x e =
@@ -137,6 +137,10 @@ let rec iter2 f a b =
   List.iter2 f a.roots b.roots;
   List.iter2 (iter2 f) a.subtrees b.subtrees
 
+let iter2 f a b =
+  try iter2 f a b
+  with Invalid_argument _ -> raise Lengths_differ
+
 let to_array a =
   let len = length a in
   if len = 0 then [| |]
@@ -158,6 +162,10 @@ let rec mapi f a =
 let rec map2 f a b =
   { a with roots = List.map2 f a.roots b.roots; subtrees = List.map2 (map2 f) a.subtrees b.subtrees }
 
+let map2 f a b =
+  try map2 f a b
+  with Invalid_argument _ -> raise Lengths_differ
+
 let rec fold_left f acc a =
   let acc = List.fold_left f acc a.roots in
   List.fold_left (fold_left f) acc a.subtrees
@@ -173,6 +181,10 @@ let rec foldi_left f acc a =
 let rec fold_left2 f acc a b =
   let acc = List.fold_left2 f acc a.roots b.roots in
   List.fold_left2 (fold_left2 f) acc a.subtrees b.subtrees
+
+let fold_left2 f acc a b =
+  try fold_left2 f acc a b
+  with Invalid_argument _ -> raise Lengths_differ
 
 let rec mem a v =
   List.mem v a.roots || List.exists (fun st -> mem st v) a.subtrees
@@ -215,6 +227,10 @@ let rec foldi_right f a v =
 let rec fold_right2 f a b v =
   let v = List.fold_right2 (fold_right2 f) a.subtrees b.subtrees v in
   List.fold_right2 f a.roots b.roots v
+
+let fold_right2 f a b v =
+  try fold_right2 f a b v
+  with Invalid_argument _ -> raise Lengths_differ
 
 let rec find p a =
   try List.find p a.roots
