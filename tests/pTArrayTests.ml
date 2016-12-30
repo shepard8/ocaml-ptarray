@@ -239,6 +239,12 @@ let tests = [
       iter2 (fun a b -> sum := !sum + a * b) a b;
       assert_equal 10 (!sum)
     );
+    "Non matching lengths" >:: (fun _ ->
+      let a = of_list l10 in
+      let b = init 11 (fun i -> i) in
+      let e _ = iter2 (fun a b -> ()) a b in
+      assert_raises Lengths_differ e
+    );
   ];
 
   "map2" >::: [
@@ -247,6 +253,12 @@ let tests = [
       let b = init 10 (fun i -> if i < 5 then 2 else 0) in
       let c = map2 ( * ) a b in
       assert_equal c (of_list [0; 2; 4; 6; 8; 0; 0; 0; 0; 0])
+    );
+    "Non matching lengths" >:: (fun _ ->
+      let a = of_list l10 in
+      let b = init 11 (fun i -> i) in
+      let e _ = map2 (fun a b -> ()) a b in
+      assert_raises Lengths_differ e
     );
   ];
 
@@ -261,7 +273,7 @@ let tests = [
       let a = of_list l10 in
       let b = init 11 (fun i -> i) in
       let v _ = fold_left2 (fun acc a b -> acc + a * b) 0 a b in
-      assert_raises (Invalid_argument "List.fold_left2") v
+      assert_raises Lengths_differ v
     );
     "Order" >:: (fun _ ->
       let a = of_list ["a"; "b"; "c"; "d"; "e"; "f"] in
@@ -282,7 +294,7 @@ let tests = [
       let a = of_list l10 in
       let b = init 11 (fun i -> i) in
       let v _ = fold_right2 (fun a b acc -> acc + a * b) a b 0 in
-      assert_raises (Invalid_argument "List.fold_right2") v
+      assert_raises Lengths_differ v
     );
     "Order" >:: (fun _ ->
       let a = of_list ["a"; "b"; "c"; "d"; "e"; "f"] in
