@@ -218,6 +218,9 @@ let rec foldi_right f a v =
   let v = List.fold_right (foldi_right f) a.subtrees v in
   list_foldi_right f a.decal a.roots v
 
+let rec fold_right2 f a b v =
+  let v = List.fold_right2 (fold_right2 f) a.subtrees b.subtrees v in
+  List.fold_right2 f a.roots b.roots v
 
 
 
