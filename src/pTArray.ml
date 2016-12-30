@@ -225,8 +225,12 @@ and subtrees_findi p = function
   | h :: t -> try findi p h with Not_found -> subtrees_findi p t
 
 let find_all p a =
-  fold_left (fun acc x -> if p x then x :: acc else acc) [] a
+  List.rev (
+    fold_left (fun acc x -> if p x then x :: acc else acc) [] a
+  )
 
 let findi_all p a =
-  foldi_left (fun acc i x -> if p i x then (i, x) :: acc else acc) [] a
+  List.rev (
+    foldi_left (fun acc i x -> if p i x then (i, x) :: acc else acc) [] a
+  )
 
