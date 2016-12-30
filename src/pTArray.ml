@@ -168,9 +168,9 @@ let rec fold_left f acc a =
   let acc = List.fold_left f acc a.roots in
   List.fold_left (fold_left f) acc a.subtrees
 
-let rec list_foldi_left f acc i = function
+let rec list_foldi_left f acc start = function
   | [] -> acc
-  | h :: t -> list_foldi_left f (f acc i h) (i + 1) t
+  | h :: t -> list_foldi_left f (f acc start h) (start + 1) t
 
 let rec foldi_left f acc a =
   let acc = list_foldi_left f acc a.decal a.roots in
