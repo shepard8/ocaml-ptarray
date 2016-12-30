@@ -186,5 +186,3 @@ val findi_all : (int -> 'a -> bool) -> 'a t -> (int * 'a) list
  * their indices, which [p] has also access to, in their order of appearance in
  * [pta]. *)
 
-(* TODO add lwt support *)
-
