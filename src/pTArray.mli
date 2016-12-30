@@ -137,22 +137,22 @@ val memq : 'a t -> 'a -> bool
 (** [memq pta v] O(length pta)
  * Checks whether [v] is a member of [pta] using physical identity. *)
 
-val find : 'a t -> ('a -> bool) -> 'a
-(** [find pta p] O(length pta * complexity of p)
+val find : ('a -> bool) -> 'a t -> 'a
+(** [find p pta] O(length pta * complexity of p)
  * Finds and returns the first element in [pta] that satisfies [p]. *)
 
-val findi : 'a t -> (int -> 'a -> bool) -> int * 'a
-(** [findi pta p] O(length pta * complexity of p)
+val findi : (int -> 'a -> bool) -> 'a t -> int * 'a
+(** [findi p pta] O(length pta * complexity of p)
  * Finds and returns the first element in [pta] that satisfies [p] along with
  * its index, which [p] has also access to. *)
 
-val find_all : 'a t -> ('a -> bool) -> 'a list
-(** [find_all pta p] O(length pta * complexity of p)
+val find_all : ('a -> bool) -> 'a t -> 'a list
+(** [find_all p pta] O(length pta * complexity of p)
  * Finds and returns all the elements of [pta] that satisfy [p], in their order
  * of appearance in [pta]. *)
 
-val findi_all : 'a t -> (int -> 'a -> bool) -> (int * 'a) list
-(** [findi_all pta p] O(length pta * complexity of p)
+val findi_all : (int -> 'a -> bool) -> 'a t -> (int * 'a) list
+(** [findi_all p pta] O(length pta * complexity of p)
  * Finds and returns all the elements of [pta] that satisfy [p] along with
  * their indices, which [p] has also access to, in their order of appearance in
  * [pta]. *)
