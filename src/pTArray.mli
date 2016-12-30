@@ -135,21 +135,26 @@ val mem : 'a t -> 'a -> bool
 
 val memq : 'a t -> 'a -> bool
 (** [memq pta v] O(length pta)
- * Checks whether [v] is a member of [pta] using physical identity. *)
+ * Checks whether [v] is a member of [pta] using physical identity.
+ * @throws Not_found if not found. *)
+
 
 val find : ('a -> bool) -> 'a t -> 'a
 (** [find p pta] O(length pta * complexity of p)
- * Finds and returns the first element in [pta] that satisfies [p]. *)
+ * Finds and returns the first element in [pta] that satisfies [p].
+ * @throws Not_found if not found. *)
 
 val findi : (int -> 'a -> bool) -> 'a t -> int * 'a
 (** [findi p pta] O(length pta * complexity of p)
  * Finds and returns the first element in [pta] that satisfies [p] along with
- * its index, which [p] has also access to. *)
+ * its index, which [p] has also access to.
+ * @throws Not_found if not found. *)
 
 val find_all : ('a -> bool) -> 'a t -> 'a list
 (** [find_all p pta] O(length pta * complexity of p)
  * Finds and returns all the elements of [pta] that satisfy [p], in their order
- * of appearance in [pta]. *)
+ * of appearance in [pta].
+ * @throws Not_found if not found. *)
 
 val findi_all : (int -> 'a -> bool) -> 'a t -> (int * 'a) list
 (** [findi_all p pta] O(length pta * complexity of p)
