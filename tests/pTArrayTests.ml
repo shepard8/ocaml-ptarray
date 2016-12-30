@@ -170,6 +170,11 @@ let tests = [
       let v = fold_left ( * ) 42 a in
       assert_equal 42 v
     );
+    "Order" >:: (fun _ ->
+      let a = of_list ["a"; "b"; "c"; "d"; "e"; "f"] in
+      let v = fold_left (fun acc x -> acc ^ x) "" a in
+      assert_equal "abcdef" v
+    );
   ];
 
   "foldi_left" >::: [
@@ -183,14 +188,48 @@ let tests = [
       let v = foldi_left (fun acc i v -> acc * i * v) 42 a in
       assert_equal 42 v
     );
+    "Order" >:: (fun _ ->
+      let a = of_list ["a"; "b"; "c"; "d"; "e"; "f"] in
+      let v = foldi_left (fun acc i v -> Printf.sprintf "%s%i%s" acc i v) "" a in
+      assert_equal "0a1b2c3d4e5f" v
+    );
   ];
 
+  "fold_right" >::: [
+    "Sum" >:: (fun _ ->
+      let a = of_list l10 in
+      let v = fold_right ( + ) a 0 in
+      assert_equal 45 v
+    );
+    "Empty" >:: (fun _ ->
+      let a = of_list l0 in
+      let v = fold_right ( * ) a 42 in
+      assert_equal 42 v
+    );
+    "Order" >:: (fun _ ->
+      let a = of_list ["a"; "b"; "c"; "d"; "e"; "f"] in
+      let v = fold_right (fun x acc -> acc ^ x) a "" in
+      assert_equal "fedcba" v
+    );
+  ];
 
-
-
-
-
-
+  "foldi_right" >::: [
+    "Sum" >:: (fun _ ->
+      let a = of_list l10 in
+      let v = foldi_right (fun i v acc -> acc + i + v) a 0 in
+      assert_equal 90 v
+    );
+    "Empty" >:: (fun _ ->
+      let a = of_list l0 in
+      let v = foldi_right (fun i v acc -> acc * i * v) a 42 in
+      assert_equal 42 v
+    );
+     "Order" >:: (fun _ ->
+      let a = of_list ["a"; "b"; "c"; "d"; "e"; "f"] in
+      let v = foldi_right (fun i v acc -> Printf.sprintf "%s%i%s" acc i v) a "" in
+      assert_equal "5f4e3d2c1b0a" v
+    );
+  ];
 
   "iter2" >::: [
     "Simple" >:: (fun _ ->
@@ -223,6 +262,33 @@ let tests = [
       let b = init 11 (fun i -> i) in
       let v _ = fold_left2 (fun acc a b -> acc + a * b) 0 a b in
       assert_raises (Invalid_argument "List.fold_left2") v
+    );
+    "Order" >:: (fun _ ->
+      let a = of_list ["a"; "b"; "c"; "d"; "e"; "f"] in
+      let b = of_list ["u"; "v"; "w"; "x"; "y"; "z"] in
+      let v = fold_left2 (fun acc a b -> acc ^ a ^ b) "" a b in
+      assert_equal "aubvcwdxeyfz" v
+    );
+  ];
+
+  "fold_right2" >::: [
+    "Sum of products" >:: (fun _ ->
+      let a = of_list l10 in
+      let b = init 10 (fun i -> if i < 5 then 1 else 0) in
+      let v = fold_right2 (fun a b acc -> acc + a * b) a b 0 in
+      assert_equal 10 v
+    );
+    "Non matching lengths" >:: (fun _ ->
+      let a = of_list l10 in
+      let b = init 11 (fun i -> i) in
+      let v _ = fold_right2 (fun a b acc -> acc + a * b) a b 0 in
+      assert_raises (Invalid_argument "List.fold_right2") v
+    );
+    "Order" >:: (fun _ ->
+      let a = of_list ["a"; "b"; "c"; "d"; "e"; "f"] in
+      let b = of_list ["u"; "v"; "w"; "x"; "y"; "z"] in
+      let v = fold_right2 (fun a b acc -> acc ^ a ^ b) a b "" in
+      assert_equal "fzeydxcwbvau" v
     );
   ];
 
