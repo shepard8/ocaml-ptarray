@@ -119,6 +119,8 @@ val map2 : ('a -> 'b -> 'c) -> 'a t -> 'b t -> 'c t
 
 val fold_left2 : ('c -> 'a -> 'b -> 'c) -> 'c -> 'a t -> 'b t -> 'c
 
+val fold_right2 : ('a -> 'b -> 'c -> 'c) -> 'a t -> 'b t -> 'c -> 'c
+
 (* {2 Scanning} *)
 
 val for_all : ('a -> bool) -> 'a t -> bool
