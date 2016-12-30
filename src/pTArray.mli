@@ -149,10 +149,6 @@ val memq : 'a t -> 'a -> bool
 
 (*
 
-val fold_right
-val foldi_right
-val fold2_right
-
 val find : 'a t -> ('a -> bool) -> 'a
 val findi : 'a t -> (int -> 'a -> bool) -> int * 'a
 
