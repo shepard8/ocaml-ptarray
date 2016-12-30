@@ -6,10 +6,7 @@
  * The order k is automatically chosen in such a way that the height of the
  * tree representation is similar to k. Note that k = 2 (resulting in a binary
  * tree) only for arrays with at most 3 values, and then that k = 3 only up to
- * 26 values.
- *
- * Every use of logarithm in the present documentation is to be read as
- * "logarithm in base k".
+ * 26 values. On the other hand with k = 10 one can store up to 10^10-1 values.
  *
  * The main advantages of persistent tree-arrays are that
  * 1) They are persistent, which means when you (functionnaly) update some
@@ -31,15 +28,15 @@
 type 'a t
 
 val length : 'a t -> int
-(** [length pta] O(log(length pta) * log(length pta))
+(** [length pta] O(k * k)
  * returns the number of elements [pta] contains. *)
 
 val get : 'a t -> int -> 'a
-(** [get pta i] O(log(length pta))
+(** [get pta i] O(k * k)
  * returns the element of [pta] at position [i]. *)
 
 val set : 'a t -> int -> 'a -> 'a t
-(** [set pta i v] O(log(lenpth pta))
+(** [set pta i v] O(k * k)
  * returns a new persistent tree-array in which value at position [i] has been
  * replaced with [v], while other elements remain unchanged. *)
 
