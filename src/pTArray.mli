@@ -104,7 +104,8 @@ val foldi_left : ('b -> int -> 'a -> 'b) -> 'b -> 'a t -> 'b
 val fold_right : ('a -> 'b -> 'b) -> 'a t -> 'b -> 'b
 (** [fold_right f pta start] O(length pta * complexity of f)
  * Folds the persistent tree-array v0 v1 ... vn in the following fashion:
- *   f v0 (f v1 (... (f vn start) ...)). *)
+ *   f v0 (f v1 (... (f vn start) ...)).
+ * Be aware that this function is not tail-recursive. *)
 
 val foldi_right : (int -> 'a -> 'b -> 'b) -> 'a t -> 'b -> 'b
 (** [foldi_right f pta start]
@@ -113,13 +114,27 @@ val foldi_right : (int -> 'a -> 'b -> 'b) -> 'a t -> 'b -> 'b
 
 (* {2 Iterators on two persistent tree-arrays} *)
 
+exception Lengths_differ
+
 val iter2 : ('a -> 'b -> unit) -> 'a t -> 'b t -> unit
+(** [iter2 f pta pta'] O(length pta * complexity of f)
+ * Same as [iter] but on two persistent tree-arrays.
+ * @throws Lengths_differ if [length pta <> length pta']. *)
 
 val map2 : ('a -> 'b -> 'c) -> 'a t -> 'b t -> 'c t
+(** [map2 f pta pta'] O(length pta * complexity of f)
+ * Same as [map] but on two persistent tree-arrays.
+ * @throws Lengths_differ if [length pta <> length pta']. *)
 
 val fold_left2 : ('c -> 'a -> 'b -> 'c) -> 'c -> 'a t -> 'b t -> 'c
+(** [fold_left2 f acc pta pta'] O(length pta * complexity of f)
+ * Same as [fold_left] but on two persistent tree-arrays.
+ * @throws Lengths_differ if [length pta <> length pta']. *)
 
 val fold_right2 : ('a -> 'b -> 'c -> 'c) -> 'a t -> 'b t -> 'c -> 'c
+(** [fold_right2 f pta pta' v] O(length pta * complexity of f)
+ * Same as [fold_right] but on two persistent tree-arrays.
+ * @throws Lengths_differ if [length pta <> length pta']. *)
 
 (* {2 Scanning} *)
 
