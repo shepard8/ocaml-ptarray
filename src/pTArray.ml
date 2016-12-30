@@ -206,16 +206,24 @@ let rec list_existsi p start = function
 let rec existsi p a =
   list_existsi p a.decal a.roots || List.exists (existsi p) a.subtrees
 
-let rec fold_right f a acc =
-  let acc = List.fold_right (fold_right f) a.subtrees acc in
-  List.fold_right f a.roots acc
+let rec fold_right f a v =
+  let v = List.fold_right (fold_right f) a.subtrees v in
+  List.fold_right f a.roots v
 
-  
+let rec list_foldi_right f start l v = match l with
+| [] -> v
+| h :: t -> f start h (list_foldi_right f (start + 1) t v)
+
+let rec foldi_right f a v =
+  let v = List.fold_right (foldi_right f) a.subtrees v in
+  list_foldi_right f a.decal a.roots v
 
 
 
 
 
-  
+
+
+
 
 
