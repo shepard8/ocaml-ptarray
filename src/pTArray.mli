@@ -137,7 +137,6 @@ val memq : 'a t -> 'a -> bool
 (** [memq pta v] O(length pta)
  * Checks whether [v] is a member of [pta] using physical identity. *)
 
-
 val find : ('a -> bool) -> 'a t -> 'a
 (** [find p pta] O(length pta * complexity of p)
  * Finds and returns the first element in [pta] that satisfies [p].
