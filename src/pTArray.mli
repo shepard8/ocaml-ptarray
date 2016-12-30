@@ -124,20 +124,20 @@ val fold_right2 : ('a -> 'b -> 'c -> 'c) -> 'a t -> 'b t -> 'c -> 'c
 (* {2 Scanning} *)
 
 val for_all : ('a -> bool) -> 'a t -> bool
-(** [for_all p pta] O(length pta)
+(** [for_all p pta] O(length pta * complexity of p)
  * Checks that every value of [pta] satisfies the predicate [p]. *)
 
 val for_alli : (int -> 'a -> bool) -> 'a t -> bool
-(** [for_alli p pta] O(length pta)
+(** [for_alli p pta] O(length pta * complexity of p)
  * Checks that every value of [pta] satisfies the predicate [p] given its
  * position. *)
 
 val exists : ('a -> bool) -> 'a t -> bool
-(** [exists p pta] O(length pta)
+(** [exists p pta] O(length pta * complexity of p)
  * Checks that at least one value in [pta] satisfies the predicate [p]. *)
 
 val existsi : (int -> 'a -> bool) -> 'a t -> bool
-(** [existsi p pta] O(length pta)
+(** [existsi p pta] O(length pta * complexity of p)
  * Checks that at least one value in [pta] satisfies the predicate [p] given
  * its position. *)
 
@@ -149,14 +149,27 @@ val memq : 'a t -> 'a -> bool
 (** [memq pta v] O(length pta)
  * Checks whether [v] is a member of [pta] using physical identity. *)
 
-(*
+val find : ('a -> bool) -> 'a t -> 'a
+(** [find p pta] O(length pta * complexity of p)
+ * Finds and returns the first element in [pta] that satisfies [p].
+ * @throws Not_found if not found. *)
 
-val find : 'a t -> ('a -> bool) -> 'a
-val findi : 'a t -> (int -> 'a -> bool) -> int * 'a
+val findi : (int -> 'a -> bool) -> 'a t -> int * 'a
+(** [findi p pta] O(length pta * complexity of p)
+ * Finds and returns the first element in [pta] that satisfies [p] along with
+ * its index, which [p] has also access to.
+ * @throws Not_found if not found. *)
 
-val find_all : 'a t -> ('a -> bool) -> 'a list
-val findi_all : 'a t -> (int -> 'a -> bool) -> (int * 'a) list
-*)
+val find_all : ('a -> bool) -> 'a t -> 'a list
+(** [find_all p pta] O(length pta * complexity of p)
+ * Finds and returns all the elements of [pta] that satisfy [p], in their order
+ * of appearance in [pta]. *)
+
+val findi_all : (int -> 'a -> bool) -> 'a t -> (int * 'a) list
+(** [findi_all p pta] O(length pta * complexity of p)
+ * Finds and returns all the elements of [pta] that satisfy [p] along with
+ * their indices, which [p] has also access to, in their order of appearance in
+ * [pta]. *)
 
 val print : ?prefix:string -> ('a -> string) -> 'a t -> unit
 

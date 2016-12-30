@@ -222,11 +222,31 @@ let rec fold_right2 f a b v =
   let v = List.fold_right2 (fold_right2 f) a.subtrees b.subtrees v in
   List.fold_right2 f a.roots b.roots v
 
+let rec find p a =
+  try List.find p a.roots
+  with Not_found -> subtrees_find p a.subtrees
+and subtrees_find p = function
+  | [] -> raise Not_found
+  | h :: t -> try find p h with Not_found -> subtrees_find p t
 
+let rec list_findi p start = function
+  | [] -> raise Not_found
+  | h :: t -> if p start h then (start, h) else list_findi p (start + 1) t
 
+let rec findi p a =
+  try list_findi p a.decal a.roots
+  with Not_found -> subtrees_findi p a.subtrees
+and subtrees_findi p = function
+  | [] -> raise Not_found
+  | h :: t -> try findi p h with Not_found -> subtrees_findi p t
 
+let find_all p a =
+  List.rev (
+    fold_left (fun acc x -> if p x then x :: acc else acc) [] a
+  )
 
-
-
-
+let findi_all p a =
+  List.rev (
+    foldi_left (fun acc i x -> if p i x then (i, x) :: acc else acc) [] a
+  )
 

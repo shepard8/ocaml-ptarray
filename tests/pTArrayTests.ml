@@ -368,6 +368,75 @@ let tests = [
     );
   ];
 
+  "find" >::: [
+    "Simple" >:: (fun _ ->
+      let a = of_list l10 in
+      let v = find (fun x -> x = 3) a in
+      assert_equal 3 v
+    );
+    "Not_found" >:: (fun _ ->
+      let a = of_list l10 in
+      assert_raises Not_found (fun _ -> find (fun x -> x > 9) a)
+    );
+    "Order" >:: (fun _ ->
+      let a = of_list l10 in
+      let v = find (fun x -> x > 3) a in
+      assert_equal 4 v
+    );
+  ];
+
+  "findi" >::: [
+    "Simple" >:: (fun _ ->
+      let a = of_list l10 in
+      let v = findi (fun i x -> i = 3 && x = 3) a in
+      assert_equal (3, 3) v
+    );
+    "Not_found" >:: (fun _ ->
+      let a = of_list l10 in
+      assert_raises Not_found (fun _ -> findi (fun i x -> i < 2 && x >= 2) a)
+    );
+    "Order" >:: (fun _ ->
+      let a = of_list l10 in
+      let v = findi (fun i x -> i > 3 || x > 5) a in
+      assert_equal (4, 4) v
+    );
+  ];
+
+  "find_all" >::: [
+    "Simple" >:: (fun _ ->
+      let a = of_list l10 in
+      let l = find_all (fun x -> x = 3) a in
+      assert_equal [3] l
+    );
+    "Not_found" >:: (fun _ ->
+      let a = of_list l10 in
+      let l = find_all (fun x -> x > 9) a in
+      assert_equal [] l
+    );
+    "Order" >:: (fun _ ->
+      let a = of_list l10 in
+      let l = find_all (fun x -> x > 5) a in
+      assert_equal [6; 7; 8; 9] l
+    );
+  ];
+
+  "findi_all" >::: [
+    "Simple" >:: (fun _ ->
+      let a = of_list l10 in
+      let l = findi_all (fun i x -> i = 3 && x = 3) a in
+      assert_equal [(3, 3)] l
+    );
+    "Not_found" >:: (fun _ ->
+      let a = of_list l10 in
+      let l = findi_all (fun i x -> i < 2 && x >= 2) a in
+      assert_equal [] l
+    );
+    "Order" >:: (fun _ ->
+      let a = of_list l10 in
+      let l = findi_all (fun i x -> i + x < 5) a in
+      assert_equal [(0, 0); (1, 1); (2, 2)] l
+    );
+  ];
 
 ]
 
