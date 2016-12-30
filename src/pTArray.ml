@@ -158,12 +158,6 @@ let rec mapi f a =
 let rec map2 f a b =
   { a with roots = List.map2 f a.roots b.roots; subtrees = List.map2 (map2 f) a.subtrees b.subtrees }
 
-let rec print ?(prefix="") f pt =
-  print_string prefix;
-  List.iter (fun x -> Printf.printf "%s " (f x)) pt.roots;
-  print_newline ();
-  List.iter (print ~prefix:(prefix^"  ") f) pt.subtrees
-
 let rec fold_left f acc a =
   let acc = List.fold_left f acc a.roots in
   List.fold_left (fold_left f) acc a.subtrees

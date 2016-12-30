@@ -171,7 +171,5 @@ val findi_all : (int -> 'a -> bool) -> 'a t -> (int * 'a) list
  * their indices, which [p] has also access to, in their order of appearance in
  * [pta]. *)
 
-val print : ?prefix:string -> ('a -> string) -> 'a t -> unit
-
 (* TODO add lwt support *)
 
