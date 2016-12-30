@@ -206,7 +206,11 @@ let rec list_existsi p start = function
 let rec existsi p a =
   list_existsi p a.decal a.roots || List.exists (existsi p) a.subtrees
 
+let rec fold_right f a acc =
+  let acc = List.fold_right (fold_right f) a.subtrees acc in
+  List.fold_right f a.roots acc
 
+  
 
 
 
